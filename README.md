@@ -1,7 +1,7 @@
 # Bouncing Ball
 
 ## TODO
-- [] More balls
-- [] Partition space by balls to form bounding boxes
-- [] Collisions based on bounding box interception
+- [x] More balls
+- [] Raycasting from balls to next position
+- [] Collisions based on ray interception
 - [] Collisions based on physics (conservation of momentum, etc.)
