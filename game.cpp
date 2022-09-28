@@ -4,12 +4,17 @@
 const int WIDTH = 1280;
 const int HEIGHT = 720;
 
-// class Ball {
-//     float ballY = 50;
-//     float ballX = 50;
-//     float ballSpeedY = 300;
-//     float ballSpeedX = 300;
-// };
+class Ball {
+    public:
+        float ballY = 50;
+        float ballX = 50;
+        float ballSpeedY = 300;
+        float ballSpeedX = 300;
+};
+
+const int NUMBALLS = 10;
+Ball balls[NUMBALLS];
+
 
 class Game : public olc::PixelGameEngine {
  public:
@@ -20,16 +25,19 @@ class Game : public olc::PixelGameEngine {
 	int frames = 0;
 	int fps;
 
-	float ballY = 50;
-    float ballX = 50;
-    float ballSpeedY = 300;
-    float ballSpeedX = 300;
+	// float ballY = 50;
+    // float ballX = 50;
+    // float ballSpeedY = 300;
+    // float ballSpeedX = 300;
 
  public:
 	bool OnUserCreate() override {
-		/*
-    	Load resources here
-    	*/
+        for (int i = 0; i < NUMBALLS; i++)
+        {
+            balls[i].ballSpeedX = balls[i].ballSpeedX + (rand() % 200 + 1);
+            balls[i].ballSpeedY = balls[i].ballSpeedY + (rand() % 200 + 1);
+        }
+               
     	return true;
 	}
 
@@ -53,24 +61,30 @@ class Game : public olc::PixelGameEngine {
 	}
 
 	void processes() {
-    	ballY += ballSpeedY * GetElapsedTime();
-		ballX += ballSpeedX * GetElapsedTime(); 
+        for (int i = 0; i < NUMBALLS; i++)
+        {
+            balls[i].ballY += balls[i].ballSpeedY * GetElapsedTime();
+		    balls[i].ballX += balls[i].ballSpeedX * GetElapsedTime(); 
 
-		if (ballY >= HEIGHT - 35 || ballY <= 35) {
-			ballSpeedY = -ballSpeedY;
-		}
+		    if (balls[i].ballY >= HEIGHT - 35 || balls[i].ballY <= 35) {
+			    balls[i].ballSpeedY = -balls[i].ballSpeedY;
+		    }
 
-    	if (ballX >= WIDTH - 35 || ballX <= 35) {
-        	ballSpeedX = -ballSpeedX;
-    	}
+    	    if (balls[i].ballX >= WIDTH - 35 || balls[i].ballX <= 35) {
+        	    balls[i].ballSpeedX = -balls[i].ballSpeedX;
+    	    }
+        }
   	}
 
   	void outputs() {
     	SetPixelMode(olc::Pixel::NORMAL);
 
-    	Clear(olc::DARK_BLUE);
+    	Clear(olc::BLACK);
 
-    	FillCircle(ballX, ballY, 20, olc::RED);
+        for (int i = 0; i < NUMBALLS; i++)
+        {
+            FillCircle(balls[i].ballX, balls[i].ballY, 20, olc::RED);
+        }
 
     	DrawLine(15, 15, WIDTH - 15, 15, olc::WHITE);
     	DrawLine(WIDTH - 15, 15, WIDTH - 15, HEIGHT - 15, olc::WHITE);
