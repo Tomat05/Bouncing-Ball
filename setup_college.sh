@@ -1,0 +1,1 @@
+PATH=$PATH:/c/TDM-GCC-64/bin/
